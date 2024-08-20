@@ -1,0 +1,40 @@
+<template>
+    <c-global-impact-banner
+        show-banner={noEvents}
+        banner-message={label.NO_EVENTS_IN_AREA_LABEL}>
+    </c-global-impact-banner>
+    <div if:true={displayDatatables}>
+        <lightning-card title={label.EVENT_GLOBAL_IMPACT_HEADER_LABEL} icon-name="standard:event" class="event-icon">
+            <div class= "slds-var-m-around_medium"> 
+                <template if:true={registeredEvents}>
+                    <lightning-datatable
+                        key-field="id"
+                        data={registeredEvents}
+                        columns={columns}
+                        hide-checkbox-column
+                        onrowaction={handleRowAction}>
+                    </lightning-datatable>
+                </template>
+                <div class= "slds-var-m-around_medium">
+                    <template if:true={noRegisteredEvents}>
+                        <p> {label.NOT_REGISTERED_FOR_EVENT_LABEL}</p>
+                    </template>
+                </div>
+            </div>
+        </lightning-card>
+        <div if:true={showAvailableEvents} class='slds-p-top_small'>
+            <lightning-card title={label.AVAILABLE_EVENTS_HEADER_LABEL} icon-name="standard:event" class="event-icon">
+                    <div class="slds-var-m-around_medium">
+                        <template if:true={availableEvents}>
+                            <lightning-datatable key-field="id" 
+                                data={availableEvents} 
+                                columns={columns} 
+                                hide-checkbox-column
+                                onrowaction={handleRowAction}>
+                            </lightning-datatable>
+                        </template>
+                    </div>
+            </lightning-card>
+        </div>
+    </div>
+</template>

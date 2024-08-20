@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>This component allows gest users to enter their email and the generated token</description>
+    <masterLabel>Global Impact Login</masterLabel>
+    <targets>
+        <target>lightningCommunity__Page</target>
+    </targets>
+    <apiVersion>52.0</apiVersion>
+    <isExposed>true</isExposed>
+</LightningComponentBundle>

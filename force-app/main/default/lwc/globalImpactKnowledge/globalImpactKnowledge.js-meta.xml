@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>This component displays knowledge articles for Global Impact Day.</description>
+    <masterLabel>Global Impact Knowledge</masterLabel>
+    <targets>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightningCommunity__Default">
+            <property name="knowledgeArticleTitle" type="String" label="Knowledge Article Title" description="Enter the value from the Title field on the Knowledge Article." required="true"/>
+        </targetConfig>
+    </targetConfigs>
+    <apiVersion>52.0</apiVersion>
+    <isExposed>true</isExposed>
+</LightningComponentBundle>

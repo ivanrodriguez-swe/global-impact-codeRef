@@ -1,0 +1,256 @@
+<template >
+  <c-global-impact-banner
+    show-banner={showBanner}
+    banner-message={bannerMessage}>
+  </c-global-impact-banner>
+  <lightning-card if:true = {eventRecord} 
+                  title={label.EVENT_GLOBAL_IMPACT_RECORD_LABEL}
+                  icon-name="standard:event"
+                  class="slds-var-m-around_small event-icon"
+                  >
+    <lightning-layout multiple-rows class="slds-border_top">
+      <lightning-layout-item 
+        size="6" 
+        small-device-size="6" 
+        medium-device-size="4" 
+        large-device-size="6" 
+        padding="around-small">
+        <h1>{label.EVENT_NAME_LABEL}</h1>
+        {eventName}
+      </lightning-layout-item>
+      <lightning-layout-item 
+        size="6" 
+        small-device-size="6" 
+        medium-device-size="4" 
+        large-device-size="6" 
+        padding="around-small">
+        <h1>{label.LEAD_LABEL}</h1>
+        {eventLeaderName}
+      </lightning-layout-item>
+      <lightning-layout-item 
+        size="6" 
+        small-device-size="6" 
+        medium-device-size="4" 
+        large-device-size="6" 
+        padding="around-small">
+        <h1>{label.START_TIME_LABEL}</h1>
+        <lightning-formatted-date-time 
+          value={eventStartTime}
+          year="numeric"
+          month="short"
+          day="2-digit"
+          hour="2-digit"
+          minute="2-digit"
+          >
+        </lightning-formatted-date-time>
+      </lightning-layout-item>
+      <lightning-layout-item 
+        size="6" 
+        small-device-size="6" 
+        medium-device-size="4" 
+        large-device-size="6" 
+        padding="around-small">
+        <h1>{label.EVENT_ADDRESS_LABEL}</h1>
+        {eventAddress}
+      </lightning-layout-item>
+      <lightning-layout-item 
+        size="6" 
+        small-device-size="6" 
+        medium-device-size="4" 
+        large-device-size="6" 
+        padding="around-small">
+        <h1>{label.END_TIME_LABEL}</h1>
+        <lightning-formatted-date-time 
+          value={eventEndTime}
+          year="numeric"
+          month="short"
+          day="2-digit"
+          hour="2-digit"
+          minute="2-digit"
+        >
+        </lightning-formatted-date-time>
+      </lightning-layout-item>
+      <lightning-layout-item 
+        size="6" 
+        small-device-size="6" 
+        medium-device-size="4" 
+        large-device-size="6" 
+        padding="around-small">
+        <h1>{label.EVENT_DESCRIPTION_LABEL}</h1>
+        <lightning-formatted-rich-text
+          value={eventDescription}>
+        </lightning-formatted-rich-text>
+       </lightning-layout-item>
+        <lightning-layout-item
+          size="6"
+          small-device-size="4" 
+          medium-device-size="4" 
+          large-device-size="6" 
+          padding="around-small">
+          <h1>{label.ADDITIONAL_INFORMATION_LABEL}</h1>
+          <lightning-formatted-text
+            value={eventAdditionalInformation}
+          >
+          </lightning-formatted-text>
+        </lightning-layout-item>
+        <lightning-layout-item 
+          size="6" 
+          small-device-size="4" 
+          medium-device-size="4" 
+          large-device-size="6" 
+          padding="around-small">
+        <h1>{label.ABOUT_THE_NONPROFIT_LABEL}</h1>
+        <lightning-formatted-rich-text
+          value={eventAboutNonprofit}>
+        </lightning-formatted-rich-text>
+       </lightning-layout-item>
+       <lightning-layout-item
+          size="6" 
+          small-device-size="6" 
+          medium-device-size="4" 
+          large-device-size="6" 
+          padding="around-small">
+        <h1>{label.VOLUNTEER_REQUIREMENTS_LABEL}</h1>
+        <lightning-formatted-text
+          value={volunteerRequirements}
+        >
+        </lightning-formatted-text>
+      </lightning-layout-item>
+      <lightning-layout-item
+          size="6" 
+          small-device-size="6" 
+          medium-device-size="4" 
+          large-device-size="6" 
+          padding="around-small">
+        <h1>{label.COVID_REQUIREMENTS_LABEL}</h1>
+        <lightning-formatted-text
+          value={covidRequirements}
+        >
+        </lightning-formatted-text>
+      </lightning-layout-item>
+      <lightning-layout-item
+          size="6" 
+          small-device-size="6" 
+          medium-device-size="4" 
+          large-device-size="6" 
+          padding="around-small">
+      </lightning-layout-item>
+      <lightning-layout-item
+          size="6" 
+          small-device-size="6" 
+          medium-device-size="4" 
+          large-device-size="6" 
+          padding="around-small">
+        <h1>{label.AVAILABLE_SPOTS_LABEL}</h1>
+        <lightning-formatted-number
+          value={availableSpots}
+        >
+        </lightning-formatted-number>
+      </lightning-layout-item>
+      <lightning-layout-item   class="slds-m-left_x-small slds-p-top_xx-large">
+        <template if:true={noRegistered}>
+          <lightning-button
+            variant="brand"
+            label={label.REGISTER_BUTTON_LABEL}
+            title="Registration"
+            onclick={submitFormToRegister}
+            class="slds-m-left_x-small slds-p-top_xx-large"
+          ></lightning-button>
+        </template>
+      </lightning-layout-item>
+      <lightning-layout-item class="slds-m-left_x-small slds-p-top_xx-large">
+        <template if:true={registered}>
+          <lightning-button
+            variant="neutral"
+            label={label.DEREGISTER_BUTTON_LABEL}
+            title="Deregistration"
+            onclick={submitFormToDeregister}
+            class="slds-m-left_x-small slds-p-top_xx-large"
+          ></lightning-button>
+        </template>
+      </lightning-layout-item>
+    </lightning-layout>
+  </lightning-card>
+    <!--REGISTRATION MODAL-->
+    <c-modal class="registration-modal">
+      <div slot="header">Event Registration: {eventName}</div>
+      <div slot="modalBody">
+        <lightning-combobox
+          class="modal-input-field"
+          name="T-shirt"
+          label={label.T_SHIRT_SIZE_LABEL}
+          placeholder={label.T_SHIRT_PLACEHOLDER_LABEL}
+          options={availableSizes}
+          value={tShirtSizeSelected}
+          onchange={handleTShirtSize}
+          required
+          message-when-value-missing={label.T_SHIRT_PLACEHOLDER_LABEL}
+        ></lightning-combobox>
+        <lightning-combobox
+          class="modal-input-field"
+          name="Preferred Language"
+          label={label.EVENT_PREFERRED_LANGUAGE}
+          placeholder={label.PREFERRED_LANGUAGE_PLACEHOLDER}
+          options={availableLanguages}
+          value={languageSelected}
+          onchange={handlePreferredLanguage}
+          required
+          message-when-value-missing={label.PREFERRED_LANGUAGE_PLACEHOLDER}
+        ></lightning-combobox>
+        <div class="slds-p-top_medium">
+          <h3>{label.COVID_REQUIREMENTS_LABEL}</h3>
+          <p>{covidRequirements}</p>
+        </div>
+        <div class="slds-float_right">
+          <lightning-input
+            class="modal-input-field"
+            type="checkbox"
+            label={label.TERMS_AND_CONDITIONS_ACCEPTANCE_LABEL}
+            required
+            message-when-value-missing={label.TERMS_AND_CONDITIONS_ACCEPTANCE_LABEL}
+          ></lightning-input>
+        </div>
+      </div>
+      <div slot="footer">
+        <lightning-button
+          label={label.CANCEL_BUTTON_LABEL}
+          variant="neutral"
+          onclick={hideRegistrationModal}
+          class="slds-m-right_x-small"
+        >
+        </lightning-button>
+        <lightning-button
+          label={label.REGISTER_BUTTON_LABEL}
+          variant="brand"
+          type="submit"
+          onclick={registerToEvent}
+          class="slds-m-right_x-small"
+        >
+        </lightning-button>
+      </div>
+    </c-modal>
+    <!--DEREGISTRATION MODAL-->
+    <c-modal class="deregistration-modal">
+      <div slot="header" class="slds-p-around_medium slds-border_bottom">{eventName}</div>
+      <div slot="modalBody">
+        <div class="slds-p-top_medium">{label.DEREGISTER_CONTENT_LABEL}</div>
+      </div>
+      <div slot="footer">
+        <lightning-button
+          label={label.CANCEL_BUTTON_LABEL}
+          variant="neutral"
+          onclick={hideDeregistrationModal}
+          class="slds-m-right_x-small"
+        >
+        </lightning-button>
+        <lightning-button
+          label={label.DEREGISTER_BUTTON_LABEL}
+          variant="brand"
+          type="submit"
+          onclick={deregister}
+          class="slds-m-right_x-small"
+        >
+        </lightning-button>
+      </div>
+    </c-modal>
+</template>

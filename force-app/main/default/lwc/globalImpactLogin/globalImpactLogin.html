@@ -1,0 +1,43 @@
+<template>
+    <form>
+        <div class="main-container slds-grid slds-grid_vertical">
+            <div class=slds-col>
+                <template if:true={errorCheck}>
+                    <div class="error slds-var-p-around_x-small slds-var-p-top_small" role="alert">
+                        <span>{errorMessage}</span>
+                    </div>
+                </template>
+            </div>
+            <lightning-helptext content= "{label.LOGIN_HELP_TEXT}">
+            </lightning-helptext>
+            <div class="slds-col slds-var-p-top_small">
+                <div if:true={disableUsername} class="slds-form-element">
+                    <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_left">
+                        <lightning-icon class="input-icon" icon-name="utility:user" alternative-text="username" size="xx-small"></lightning-icon>
+                        <input type="email" data-id="inputUsername" placeholder={usernameEntered} class="slds-input input-element" required readonly />
+                    </div>
+                </div>
+                <div if:false={disableUsername} class="slds-form-element">
+                    <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_left">
+                        <lightning-icon class="input-icon" icon-name="utility:user" alternative-text="username" size="xx-small"></lightning-icon>
+                        <input type="email" data-id="inputUsername" placeholder="Email Address" class="slds-input input-element" required  />
+                    </div>
+                </div>
+            </div>
+            <div if:true={showLoginButton} class="slds-col slds-var-p-top_small">               
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_left">
+                        <lightning-icon class="input-icon" icon-name="utility:lock" alternative-text="Code" size="xx-small"></lightning-icon>
+                        <input type="password" data-id="inputPassword" placeholder="Login Code" class="slds-input input-element" required/>
+                    </div>
+                </div>
+            </div>
+            <div if:true={showLoginButton} class="slds-col slds-var-p-top_small">
+                <button type="submit" class="login-button slds-button" onclick={grantAccessProcess}>Log In</button>
+            </div>
+            <div if:true={showRequestButton} class="slds-col slds-var-p-top_small">
+                <button type="submit" class="login-button slds-button" onclick={requestVolunteerCode}>Request Code</button>
+            </div>
+        </div>
+    </form>
+</template>

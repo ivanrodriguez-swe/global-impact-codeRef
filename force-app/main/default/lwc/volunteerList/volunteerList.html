@@ -1,0 +1,68 @@
+<template>
+    <div class="slds-m-top-large">
+    <lightning-card
+      if:true={attendeeList}
+      title={label.CHECK_IN_HEADER_LABEL}
+      icon-name="utility:record_update"
+      class="slds-var-m-around_small slds-p-bottom_xx-large check-in-icon"
+    > 
+      <div
+        class="slds-p-around_small slds-border_top"
+      >
+        <c-event-details-button
+          button-to-show="check-in-all"
+          button-variant="brand"
+          button-label={label.CHECK_IN_ALL_BUTTON_LABEL}
+          button-title="Check In All"
+          oncheckinall={handleRefreshApex}
+          button-type="check-in-all"
+          button-status={disabledCheckInAll}
+          attendee-records={attendeeList}
+          event-id={eventId}
+        >
+        </c-event-details-button>
+      </div>
+      <div class="slds-box slds-m-around_small">
+      <lightning-layout multiple-rows class="slds-p-top_medium">
+        <lightning-layout-item size="6" padding="horizontal-small" class="slds-border_bottom">
+          <h1>{label.VOLUNTEER_NAME_LABEL}</h1>
+        </lightning-layout-item>
+        <lightning-layout-item size="6" padding="horizontal-small" class="slds-border_bottom">
+          <h1>{label.CHECK_IN_LABEL}</h1>
+        </lightning-layout-item>
+        <template for:each={attendeeList} for:item="attendee">
+          <lightning-layout-item
+            key={attendee.Id}
+            size="6"
+            padding="around-small"
+            class="slds-border_top"
+          >
+            <!--{attendee.Attendee__r.Name}-->
+            {attendee.formattedName}
+          </lightning-layout-item>
+          <lightning-layout-item
+            key={attendee.Id}
+            size="6"
+            padding="around-small"
+            class="slds-border_top"
+          >
+            <c-event-details-button
+              button-to-show="check-in"
+              button-variant="brand"
+              button-label={label.CHECK_IN_BUTTON_LABEL}
+              button-title="Check In"
+              oncheckin={handleRefreshApex}
+              button-type="check-in"
+              button-status={attendee.Active_Volunteer_Time_Formula__c}
+              attendee-id={attendee.Id}
+              attendee-records={attendeeList}
+              event-id={eventId}
+            >
+            </c-event-details-button>
+          </lightning-layout-item>
+        </template>
+      </lightning-layout>
+      </div>
+    </lightning-card>
+</div>
+</template>
